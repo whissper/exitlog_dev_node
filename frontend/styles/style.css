@@ -27,7 +27,7 @@ body {
 }
 
 .sav2-service-title .item {
-	min-width: 100px;
+	white-space: nowrap;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -48,6 +48,7 @@ body {
 
 .sav2-service-title .item4 {
 	-ms-grid-column: 4;
+	padding-left: 25px;
 }
 /* IE11 solution for grid end; */
 

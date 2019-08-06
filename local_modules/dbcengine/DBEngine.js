@@ -642,6 +642,17 @@ class DBEngine {
                 params.push(postData['id']);
                 resultString = 'Объекты выхода под номером id: <b>' + postData['id'] + '</b> успешно удалены.';
                 break;
+            case 'update_exit':
+                queryString = 
+                    'UPDATE exits '+
+                    'SET time_exit = ?, time_return = ? '+ 
+                    'WHERE exits.id = ?';
+            
+                params.push(postData['timeexit']);
+                params.push(postData['timereturn']);
+                params.push(postData['id']);
+                resultString = 'Данные по выходу: ' + postData['id'] + ' успешно изменены';
+                break;
         }
 
         if (await this.changeIsPossible(postData['id'])) {

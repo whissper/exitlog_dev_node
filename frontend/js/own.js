@@ -2,8 +2,8 @@
  -- EXIT LOG --
  --- front-end ---
  @author: SAV2
- @version 0.5.3
- @since: 02.03.2018
+ @version 0.5.4
+ @since: 12.12.2018
  **/
 
 var currentPageExit = 0;
@@ -941,24 +941,24 @@ function updateExit() {
     } else {
         objectsJSON += '{ "objects" : [ ';
         $('.sav2-exit-object-item-upd').each(function(index, element) {
-            if( $(element).find('.exit-object-name-upd').val().replace(/"/g, '\\"').trim() === '' ) {
+            if( $(element).find('.exit-object-name-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() === '' ) {
                 return;//skip
             }
 
             objectsJSON += '[';
-            objectsJSON += '"' + $(element).find('.exit-object-name-upd').val().replace(/"/g, '\\"').trim() + '",';
-            objectsJSON += '"' + $(element).find('.exit-object-note-upd').val().replace(/"/g, '\\"').trim() + '",';
-            objectsJSON += '"' + $(element).find('.exit-object-postalindex-upd').val().replace(/"/g, '\\"').trim() + '",';
-            objectsJSON += '"' + $(element).find('.exit-object-region-upd').val().replace(/"/g, '\\"').trim() + '",';
-            objectsJSON += '"' + $(element).find('.exit-object-town-upd').val().replace(/"/g, '\\"').trim() + '",';
-            objectsJSON += '"' + $(element).find('.exit-object-street-upd').val().replace(/"/g, '\\"').trim() + '",';
-            objectsJSON += '"' + $(element).find('.exit-object-building-upd').val().replace(/"/g, '\\"').trim() + '",';
-            objectsJSON += '"' + $(element).find('.exit-object-apartment-upd').val().replace(/"/g, '\\"').trim() + '",';
-            objectsJSON += '"' + $(element).find('.exit-object-geolat-upd').val().replace(/"/g, '\\"').trim() + '",';
-            objectsJSON += '"' + $(element).find('.exit-object-geolon-upd').val().replace(/"/g, '\\"').trim() + '",';
+            objectsJSON += '"' + $(element).find('.exit-object-name-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+            objectsJSON += '"' + $(element).find('.exit-object-note-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+            objectsJSON += '"' + $(element).find('.exit-object-postalindex-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+            objectsJSON += '"' + $(element).find('.exit-object-region-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+            objectsJSON += '"' + $(element).find('.exit-object-town-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+            objectsJSON += '"' + $(element).find('.exit-object-street-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+            objectsJSON += '"' + $(element).find('.exit-object-building-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+            objectsJSON += '"' + $(element).find('.exit-object-apartment-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+            objectsJSON += '"' + $(element).find('.exit-object-geolat-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+            objectsJSON += '"' + $(element).find('.exit-object-geolon-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
             //if street data or building data are empty
-            if( $(element).find('.exit-object-street-upd').val().replace(/"/g, '\\"').trim() === '' || 
-                    $(element).find('.exit-object-building-upd').val().replace(/"/g, '\\"').trim() === '') {
+            if( $(element).find('.exit-object-street-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() === '' || 
+                    $(element).find('.exit-object-building-upd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() === '') {
                 objectsJSON += '"1"';
             } else {
                 objectsJSON += '"0"';
@@ -976,7 +976,9 @@ function updateExit() {
     doUpdate('update_exit',
         {
             id: $('#updateElement #elementDataUpd #idUpd').val(),
-            objects: objectsJSON  
+            objects: objectsJSON,
+            timeexit: $('#timeexitExitUpd').val().trim(),
+            timereturn: $('#timereturnExitUpd').val().trim()
         },
         function() {selectExits(currentPageExit);}
     );
@@ -1001,7 +1003,7 @@ function updateUser() {
     doUpdate('update_user',
         {
             id: $('#updateElement #elementDataUpd #idUpd').val(),
-            fio: $('#updateElement #elementDataUpd #fioUserUpd').val().trim(),
+            fio: $('#updateElement #elementDataUpd #fioUserUpd').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim(),
             pass: $('#updateElement #elementDataUpd #passwordUserUpd').val(),
             firstlogin: 1
         },
@@ -1060,7 +1062,7 @@ $(document).ready(function(){
             doUpdate('update_user',
                 {
                     id: $('#userfio').attr('userid'),
-                    fio: $('#userfio').val().trim(),
+                    fio: $('#userfio').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim(),
                     pass: pwd,
                     firstlogin: 0 
                 },
@@ -1247,24 +1249,24 @@ $(document).ready(function(){
         } else {
             newRecordJSON += '"objects" : [ ';
             $('.sav2-exit-object-item').each(function(index, element) {
-                if( $(element).find('.exit-object-name').val().replace(/"/g, '\\"').trim() === '' ) {
+                if( $(element).find('.exit-object-name').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() === '' ) {
                     return;//skip
                 }
                 
                 newRecordJSON += '[';
-                newRecordJSON += '"' + $(element).find('.exit-object-name').val().replace(/"/g, '\\"').trim() + '",';
-                newRecordJSON += '"' + $(element).find('.exit-object-note').val().replace(/"/g, '\\"').trim() + '",';
-                newRecordJSON += '"' + $(element).find('.exit-object-postalindex').val().replace(/"/g, '\\"').trim() + '",';
-                newRecordJSON += '"' + $(element).find('.exit-object-region').val().replace(/"/g, '\\"').trim() + '",';
-                newRecordJSON += '"' + $(element).find('.exit-object-town').val().replace(/"/g, '\\"').trim() + '",';
-                newRecordJSON += '"' + $(element).find('.exit-object-street').val().replace(/"/g, '\\"').trim() + '",';
-                newRecordJSON += '"' + $(element).find('.exit-object-building').val().replace(/"/g, '\\"').trim() + '",';
-                newRecordJSON += '"' + $(element).find('.exit-object-apartment').val().replace(/"/g, '\\"').trim() + '",';
-                newRecordJSON += '"' + $(element).find('.exit-object-geolat').val().replace(/"/g, '\\"').trim() + '",';
-                newRecordJSON += '"' + $(element).find('.exit-object-geolon').val().replace(/"/g, '\\"').trim() + '",';
+                newRecordJSON += '"' + $(element).find('.exit-object-name').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+                newRecordJSON += '"' + $(element).find('.exit-object-note').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+                newRecordJSON += '"' + $(element).find('.exit-object-postalindex').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+                newRecordJSON += '"' + $(element).find('.exit-object-region').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+                newRecordJSON += '"' + $(element).find('.exit-object-town').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+                newRecordJSON += '"' + $(element).find('.exit-object-street').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+                newRecordJSON += '"' + $(element).find('.exit-object-building').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+                newRecordJSON += '"' + $(element).find('.exit-object-apartment').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+                newRecordJSON += '"' + $(element).find('.exit-object-geolat').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
+                newRecordJSON += '"' + $(element).find('.exit-object-geolon').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() + '",';
                 //if street data or building data are empty
-                if( $(element).find('.exit-object-street').val().replace(/"/g, '\\"').trim() === '' || 
-                        $(element).find('.exit-object-building').val().replace(/"/g, '\\"').trim() === '') {
+                if( $(element).find('.exit-object-street').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() === '' || 
+                        $(element).find('.exit-object-building').val().replace(/\\/g, "/").replace(/"/g, '\\"').trim() === '') {
                     newRecordJSON += '"1"';
                 } else {
                     newRecordJSON += '"0"';
@@ -1464,7 +1466,7 @@ $(document).ready(function(){
                 startDate: $('#excel-period-from').val().trim(),
                 endDate: $('#excel-period-till').val().trim()
             },
-            timeout: 60000,
+            timeout: 300000,
             success: function(message) {
                 if ( !processException({message: message, methodName: 'Tab-2 click->#writeDataIntoXLSX'}) ) {//if exception hasn't occurred
                     window.location = window.location.href + message;
@@ -1522,5 +1524,15 @@ $(document).ready(function(){
     //Admin workarea Tab-3 (update user)
     $(document).on('click', '.sav2-upd-user', function(){
         loadUpdateForm($(this).attr('id'), 'update_user_modal');
+    });
+	
+	//tab button #go-to-docx
+	$(document).on('click', '#go-to-docx', function(){
+        window.location = "http://kom-es01-dev01:8888/docx/";
+    });
+	
+	//tab button #go-to-acts
+	$(document).on('click', '#go-to-acts', function(){
+        window.location = "http://kom-es01-app25:8888/acts/";
     });
 });

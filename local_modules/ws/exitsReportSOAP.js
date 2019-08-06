@@ -31,7 +31,7 @@ class exitsReportSOAP {
             endDate = Utils.dateConvert(postData['endDate'], 'BACK_END');
         }
         
-        var url  = 'http://kom-ts01-dev01:8080/ExitsReportWS/ExitsReportWS?wsdl';
+        var url  = 'http://kom-es01-dev01:8080/ExitsReportWS/ExitsReportWS?wsdl';
         var args = {
             startDate : startDate,
             endDate   : endDate,

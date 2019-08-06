@@ -17,9 +17,9 @@
 	<label for="time">Время:</label>
 	<div class="input-group">
 		<span class="input-group-addon">c: </span>
-		<input id="timeexitExitUpd" type="text" class="form-control" placeholder="" disabled="">
+		<input id="timeexitExitUpd" type="text" class="form-control" placeholder="00:00">
 		<span class="input-group-addon">до: </span>
-		<input id="timereturnExitUpd" type="text" class="form-control" placeholder="" disabled="">
+		<input id="timereturnExitUpd" type="text" class="form-control" placeholder="00:00">
 	</div>
 </div>
 
@@ -51,6 +51,78 @@
 </div>
 <div class="clear"></div>
 <script>
+	$('#timeexitExitUpd').inputmask({ mask: "99:99", 
+								greedy: false, 
+								oncomplete: function(){
+									$(this).val( $(this).val().replace(/_/g, '0') );
+									var hoursNminutes = $(this).val().split(':');
+									if(parseInt(hoursNminutes[0])>18){
+										hoursNminutes[0]='18';
+									}
+									if(parseInt(hoursNminutes[0])<9){
+										hoursNminutes[0]='09';
+									}
+									if(parseInt(hoursNminutes[1])>59){
+										hoursNminutes[1]='59';
+									}
+									var hours = (parseInt(hoursNminutes[0]) < 10 ? '0'+hoursNminutes[0] : hoursNminutes[0]);
+									var minutes = (parseInt(hoursNminutes[1]) < 10 ? '0'+hoursNminutes[1] : hoursNminutes[1]);
+									$(this).val(hoursNminutes[0]+':'+hoursNminutes[1]);
+								},
+								onincomplete: function(){
+									$(this).val( $(this).val().replace(/_/g, '0') );
+									var hoursNminutes = $(this).val().split(':');
+									if(parseInt(hoursNminutes[0])>18){
+										hoursNminutes[0]='18';
+									}
+									if(parseInt(hoursNminutes[0])<9){
+										hoursNminutes[0]='09';
+									}
+									if(parseInt(hoursNminutes[1])>59){
+										hoursNminutes[1]='59';
+									}
+									var hours = (parseInt(hoursNminutes[0]) < 10 ? '0'+hoursNminutes[0] : hoursNminutes[0]);
+									var minutes = (parseInt(hoursNminutes[1]) < 10 ? '0'+hoursNminutes[1] : hoursNminutes[1]);
+									$(this).val(hoursNminutes[0]+':'+hoursNminutes[1]);
+								}
+							});
+							
+	$('#timereturnExitUpd').inputmask({ mask: "99:99", 
+								greedy: false, 
+								oncomplete: function(){
+									$(this).val( $(this).val().replace(/_/g, '0') );
+									var hoursNminutes = $(this).val().split(':');
+									if(parseInt(hoursNminutes[0])>18){
+										hoursNminutes[0]='18';
+									}
+									if(parseInt(hoursNminutes[0])<9){
+										hoursNminutes[0]='09';
+									}
+									if(parseInt(hoursNminutes[1])>59){
+										hoursNminutes[1]='59';
+									}
+									var hours = (parseInt(hoursNminutes[0]) < 10 ? '0'+hoursNminutes[0] : hoursNminutes[0]);
+									var minutes = (parseInt(hoursNminutes[1]) < 10 ? '0'+hoursNminutes[1] : hoursNminutes[1]);
+									$(this).val(hoursNminutes[0]+':'+hoursNminutes[1]);
+								},
+								onincomplete: function(){
+									$(this).val( $(this).val().replace(/_/g, '0') );
+									var hoursNminutes = $(this).val().split(':');
+									if(parseInt(hoursNminutes[0])>18){
+										hoursNminutes[0]='18';
+									}
+									if(parseInt(hoursNminutes[0])<9){
+										hoursNminutes[0]='09';
+									}
+									if(parseInt(hoursNminutes[1])>59){
+										hoursNminutes[1]='59';
+									}
+									var hours = (parseInt(hoursNminutes[0]) < 10 ? '0'+hoursNminutes[0] : hoursNminutes[0]);
+									var minutes = (parseInt(hoursNminutes[1]) < 10 ? '0'+hoursNminutes[1] : hoursNminutes[1]);
+									$(this).val(hoursNminutes[0]+':'+hoursNminutes[1]);
+								}
+							});
+	
 	$.ajax({
 		type: "POST",
 		url: restServiceUrl + "select_points",

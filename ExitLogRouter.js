@@ -1,3 +1,11 @@
+/**
+ -- EXIT LOG --
+ --- back-end ---
+ @author: SAV2
+ @version 0.2.1
+ @since: 12.12.2018
+ **/
+
 var path          = require('path');
 var express       = require('express');
 var session       = require('express-session');
@@ -115,6 +123,12 @@ exitlogRouter.post('/draw_panel', async function(req, res, next){
         tmplProvider.set('hide', 'style="display:none;"');
     }
     
+	if (parseInt(req.session.credentials.exitUsrDepid) === 2 || parseInt(req.session.credentials.exitUsrDepid) === 3) {
+		tmplProvider.set('uhta', '');
+	} else {
+		tmplProvider.set('uhta', 'style="display:none;"');
+	}
+	
     res.send(await tmplProvider.loadTemplate('./local_modules/templates/', req.body.tmplname));
 });
 //insert new record
@@ -214,12 +228,20 @@ exitlogRouter.post('/update_exit', async function(req, res, next){
     //1 -- for main-inspector usage | 3 -- for inspector usage
     if (Utils.checkPermission(req.session, 1) || Utils.checkPermission(req.session, 3)) {
         var postData = {};
-        postData.id      = parseInt(req.body.id);
-        postData.objects = req.body.objects;
+        postData.id         = parseInt(req.body.id);
+        postData.objects    = req.body.objects;
+        postData.timeexit   = req.body.timeexit;
+        postData.timereturn = req.body.timereturn;
         
-        var dbEngine = new DBEng(req.session, connectionPool);
-        await dbEngine.changeData('delete_objects_by_exitid', postData);
-        res.send(await dbEngine.insertObjects(postData));
+        // if (time_return - time_exit) <= 0
+        if (Utils.getMills(postData.timereturn) - Utils.getMills(postData.timeexit) <= 0) {
+            res.send('ERROR_TIME|Время возвращения должно быть позднее времени выхода');
+        } else {
+            var dbEngine = new DBEng(req.session, connectionPool);
+            await dbEngine.changeData('delete_objects_by_exitid', postData);
+            await dbEngine.insertObjects(postData)
+            res.send(await dbEngine.changeData('update_exit', postData));
+        }        
     } else {
         res.send('ERROR_ACCESS_DENIED');
     }

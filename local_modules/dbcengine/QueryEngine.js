@@ -17,10 +17,10 @@ class QueryEngine {
     static createPool() {
         return mysql.createPool({
             timezone        : 'Z',
-            host            : '***',
-            user            : '***',
-            password        : '***',
-            database        : '***',
+            host            : 'localhost',
+            user            : 'yusav',
+            password        : 'Whissper@9',
+            database        : 'exitlog_dev',
             connectionLimit : 10
         });
     }

@@ -5,6 +5,8 @@
 			  <button type="button" class="btn btn-default active" id="showTab1">Новая запись</button>
 			  <button type="button" class="btn btn-default" id="showTab2">Журнал</button>
 			  <button type="button" class="btn btn-default" id="showTab3" [@hide]>Пользователи</button>
+			  <button type="button" class="btn btn-default" id="go-to-docx">Акт обследования</button>
+			  <button type="button" class="btn btn-default" id="go-to-acts" [@uhta]>Бланки Ухта</button>
 			  <button type="button" class="btn btn-primary" id="logout">Выйти</button>
 		</div>
 	</div>

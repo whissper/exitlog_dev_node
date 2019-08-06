@@ -8,6 +8,6 @@ backend.use('/exitlog_dev', express.static('frontend'));
 //mount route handler
 backend.use('/exitlog_dev', exitLogRouter);
 
-backend.listen(8888, () => {
-    console.log('exitlog backend is listening on port 8888!');
+backend.listen(3000, () => {
+    console.log('exitlog_dev backend is listening on port 3000!');
 });
