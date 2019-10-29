@@ -53,7 +53,7 @@ class DBEngine {
                     }
                 }, 
                 (error) => {
-                    rows.error = 'ERROR_PDO|' + error.sqlMessage;
+                    rows.error = 'ERROR_PDO|' + 'SQL Exception: ' + error.message;
                 }
             );
 
@@ -74,14 +74,14 @@ class DBEngine {
                     points.points = result;
                 },
                 (error) => {
-                    points = 'ERROR_PDO|' + error.sqlMessage;
+                    points = 'ERROR_PDO|' + 'SQL Exception: ' + error.message;
                 }
             );
         /*
         try {
             points.points = await new QueryEng(this.pool).query(queryString);
         } catch (e) {
-            points = 'ERROR_PDO|' + e.sqlMessage;
+            points = 'ERROR_PDO|' + 'SQL Exception: ' + e.message;
         }
         */
         return points;
@@ -216,7 +216,7 @@ class DBEngine {
                         resultString.rowitems  = [];
                     },
                     (error) => {
-                        throw new SQLException('SQL Exception', error.sqlMessage);
+                        throw new SQLException('SQL Exception', error.message);
                     }
                 );
             
@@ -226,7 +226,7 @@ class DBEngine {
                         resultSet = result;
                     },
                     (error) => {
-                        throw new SQLException('SQL Exception', error.sqlMessage);
+                        throw new SQLException('SQL Exception', error.message);
                     }
                 );
             
@@ -274,7 +274,7 @@ class DBEngine {
                                     itemToPlace.push(objects);
                                 },
                                 (error) => {
-                                    throw new SQLException('SQL Exception', error.sqlMessage);
+                                    throw new SQLException('SQL Exception', error.message);
                                 }
                             );   
                     } else if (prop === 'dayofweek') {
@@ -291,7 +291,7 @@ class DBEngine {
                 resultString.rowitems.push(itemToPlace);
             }
         } catch (e) {
-            resultString = 'ERROR_PDO|' + e.error;
+            resultString = 'ERROR_PDO|' + e.message +': '+ e.error;
         }
 
         return resultString;    
@@ -387,7 +387,7 @@ class DBEngine {
                         resultSet = result;
                     },
                     (error) => {
-                        throw new SQLException('SQL Exception', error.sqlMessage);
+                        throw new SQLException('SQL Exception', error.message);
                     }
                 );
 
@@ -433,7 +433,7 @@ class DBEngine {
                     break;
             }
         } catch (e) {
-            resultString = 'ERROR_PDO|' + e.error;
+            resultString = 'ERROR_PDO|' + e.message +': '+ e.error;
         }
 
         return resultString;
@@ -474,7 +474,7 @@ class DBEngine {
                         exitID = result.insertId;
                     },
                     (error) => {
-                        throw new SQLException('SQL Exception', error.sqlMessage);
+                        throw new SQLException('SQL Exception', error.message);
                     }
                 );
 
@@ -521,12 +521,12 @@ class DBEngine {
                             resultString = 'Запись успешно занесена в журнал.';
                         },
                         (error) => {
-                            throw new SQLException('SQL Exception', error.sqlMessage);
+                            throw new SQLException('SQL Exception', error.message);
                         }
                     );
             }
         } catch (e) {
-            resultString = 'ERROR_PDO|' + e.error;
+            resultString = 'ERROR_PDO|' + e.message +': '+ e.error;
         }
 
         return resultString;
@@ -586,12 +586,12 @@ class DBEngine {
                                 resultString = 'Данные по выходу: ' + postData['id'] + ' успешно изменены';
                             },
                             (error) => {
-                                throw new SQLException('SQL Exception', error.sqlMessage);
+                                throw new SQLException('SQL Exception', error.message);
                             }
                         );
                 }
             } catch (e) {
-                resultString = 'ERROR_PDO|' + e.error;
+                resultString = 'ERROR_PDO|' + e.message +': '+ e.error;
             }
         } else {
             resultString = 'CHANGE_IMPOSSIBLE';
@@ -630,7 +630,7 @@ class DBEngine {
                     'WHERE exits.id = ?';
             
                 params.push(postData['id']);
-                resultString = 'Запись под номером id: <b>' + postData['id'] + '</b> успешно удалена.';
+                resultString = 'Запись под номером id: ' + postData['id'] + ' успешно удалена.';
                 break;
             case 'delete_objects_by_exitid':
                 queryString = 
@@ -640,7 +640,7 @@ class DBEngine {
                     'WHERE exits.id = ?';
             
                 params.push(postData['id']);
-                resultString = 'Объекты выхода под номером id: <b>' + postData['id'] + '</b> успешно удалены.';
+                resultString = 'Объекты выхода под номером id: ' + postData['id'] + ' успешно удалены.';
                 break;
             case 'update_exit':
                 queryString = 
@@ -663,11 +663,11 @@ class DBEngine {
 
                         },
                         (error) => {
-                            throw new SQLException('SQL Exception', error.sqlMessage);
+                            throw new SQLException('SQL Exception', error.message);
                         }
                     );
             } catch (e) {
-                resultString = 'ERROR_PDO|' + e.error;
+                resultString = 'ERROR_PDO|' + e.message +': '+ e.error;
             }
         } else {
             resultString = 'CHANGE_IMPOSSIBLE';
@@ -697,7 +697,7 @@ class DBEngine {
                     'WHERE users.id = ?';
             
                 params.push(postData['id']);
-                resultString = 'Пользователь с id: <b>' + postData['id'] + '</b> заблокирован.';
+                resultString = 'Пользователь с id: ' + postData['id'] + ' заблокирован.';
                 break;
             case 'unlock_user':
                 queryString = 
@@ -706,7 +706,7 @@ class DBEngine {
                     'WHERE users.id = ?';
             
                 params.push(postData['id']);
-                resultString = 'Пользователь с id: <b>' + postData['id'] + '</b> разблокирован.';
+                resultString = 'Пользователь с id: ' + postData['id'] + ' разблокирован.';
                 break;
             case 'update_user':
                 //if pass field is empty then don't change the password
@@ -732,7 +732,7 @@ class DBEngine {
                     params.push(postData['id']);
                 }
                 
-                resultString = 'Данные пользователя с id: <b>' + postData['id'] + '</b> успешно изменены.';
+                resultString = 'Данные пользователя с id: ' + postData['id'] + ' успешно изменены.';
                 break;
         }
         
@@ -747,7 +747,7 @@ class DBEngine {
 
                             },
                             (error) => {
-                                throw new SQLException('SQL Exception', error.sqlMessage);
+                                throw new SQLException('SQL Exception', error.message);
                             }
                         );
                 } else {
@@ -761,12 +761,12 @@ class DBEngine {
 
                         },
                         (error) => {
-                            throw new SQLException('SQL Exception', error.sqlMessage);
+                            throw new SQLException('SQL Exception', error.message);
                         }
                     );
             }
         } catch (e) {
-            resultString = 'ERROR_PDO|' + e.error;
+            resultString = 'ERROR_PDO|' + e.message +': '+ e.error;
         }
 
         return resultString;
@@ -804,7 +804,7 @@ class DBEngine {
                         }
                     },
                     (error) => {
-                        throw new SQLException('SQL Exception', error.sqlMessage);
+                        throw new SQLException('SQL Exception', error.message);
                     }
                 );
         } catch (e) {
@@ -846,7 +846,7 @@ class DBEngine {
                         }
                     },
                     (error) => {
-                        throw new SQLException('SQL Exception', error.sqlMessage);
+                        throw new SQLException('SQL Exception', error.message);
                     }
                 );
         } catch(e) {

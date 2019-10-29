@@ -2,8 +2,8 @@
  -- EXIT LOG --
  --- front-end ---
  @author: SAV2
- @version 0.5.4
- @since: 12.12.2018
+ @version 0.8.0
+ @since: 29.10.2019
  **/
 
 var currentPageExit = 0;
@@ -221,7 +221,11 @@ function processException(dataObject) {
         errorOccured = true;
         var errorInfo = data.message.split('|');
         representError(data.representType, 'Web service call error: ' + errorInfo[1]);
-    } else if (data.message.indexOf('ERROR_JAVA') !== -1) {//ERROR
+    } else if (data.message.indexOf('ERROR_SOAP') !== -1) {
+        errorOccured = true;
+        var errorInfo = data.message.split('|');
+        representError(data.representType, 'SOAP Web service call error: ' + errorInfo[1]);
+    } else if (data.message.indexOf('ERROR_JAVA') !== -1) {
         errorOccured = true;
         var errorInfo = data.message.split('|');
         representError(data.representType, 'Java runtime error: ' + errorInfo[1]);
@@ -320,7 +324,9 @@ function loadUserWorkspace(message) {
                 userrole: userData.userrole
             },
             success: function(message) {
-                choosePanel(message);
+                //choosePanel(message);
+                var jsonMessage = $.parseJSON(message);
+                choosePanel(jsonMessage.panelID);
             },
             error: function(){
                 alert('error occured during ajax-request to the server : ' +
@@ -340,7 +346,9 @@ function keepUserWorkspace() {
             id: '0'
         },
         success: function(message) {
-            choosePanel(message);
+            //choosePanel(message);
+            var jsonMessage = $.parseJSON(message);
+            choosePanel(jsonMessage.panelID);
         },
         error: function(){
             alert('error occured during ajax-request to the server : ' +
@@ -1528,7 +1536,7 @@ $(document).ready(function(){
 	
 	//tab button #go-to-docx
 	$(document).on('click', '#go-to-docx', function(){
-        window.location = "http://kom-es01-dev01:8888/docx/";
+        window.location = "http://kom-es01-app25:8888/docx/";
     });
 	
 	//tab button #go-to-acts
