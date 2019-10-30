@@ -120,7 +120,9 @@ exitlogRouter.post('/load_workspace', async function (req, res, next) {
             res.send({
                 panelID: panelID,
                 userFIO: (req.session !== undefined ? req.session.credentials.exitUsrFio : ''),
-                userID: (req.session !== undefined ? req.session.credentials.exitUsrId : '')
+                userID: (req.session !== undefined ? req.session.credentials.exitUsrId : ''),
+                depID: (req.session !== undefined ? req.session.credentials.exitUsrDepid : ''),
+                depName: (req.session !== undefined ? req.session.credentials.exitUsrDepname : '')
             });
             //res.send(await workspace.loadWorkspace(parseInt(req.body.userid), parseInt(req.body.userrole)));
         } else {
@@ -138,7 +140,9 @@ exitlogRouter.post('/keep_workspace', async function (req, res, next) {
         res.send({
             panelID: panelID,
             userFIO: (req.session !== undefined ? req.session.credentials.exitUsrFio : ''),
-            userID: (req.session !== undefined ? req.session.credentials.exitUsrId : '')
+            userID: (req.session !== undefined ? req.session.credentials.exitUsrId : ''),
+            depID: (req.session !== undefined ? req.session.credentials.exitUsrDepid : ''),
+            depName: (req.session !== undefined ? req.session.credentials.exitUsrDepname : '')
         });
         //res.send(await workspace.keepWorkspace());
     } catch (e) {
