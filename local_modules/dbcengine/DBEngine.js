@@ -401,21 +401,23 @@ class DBEngine {
                             resultString.fields[prop] = [];
 
                             for (var item of resultSet) {
-                                resultString.fields[prop].push(
-                                    [
-                                        Utils.nullToStr( item.objectname ),
-                                        Utils.nullToStr( item.objectnote ),
-                                        Utils.nullToStr( item.objectpostalindex ),
-                                        Utils.nullToStr( item.objectregion ),
-                                        Utils.nullToStr( item.objecttown ),
-                                        Utils.nullToStr( item.objectstreet ),
-                                        Utils.nullToStr( item.objectbuilding ),
-                                        Utils.nullToStr( item.objectapartment ),
-                                        Utils.nullToStr( item.objectgeolat ),
-                                        Utils.nullToStr( item.objectgeolon ),
-                                        Utils.nullToStr( item.objectoldformat )
-                                    ]
-                                );
+                                if (item.objectname !== null) {
+                                    resultString.fields[prop].push(
+                                        [
+                                            Utils.nullToStr( item.objectname ),
+                                            Utils.nullToStr( item.objectnote ),
+                                            Utils.nullToStr( item.objectpostalindex ),
+                                            Utils.nullToStr( item.objectregion ),
+                                            Utils.nullToStr( item.objecttown ),
+                                            Utils.nullToStr( item.objectstreet ),
+                                            Utils.nullToStr( item.objectbuilding ),
+                                            Utils.nullToStr( item.objectapartment ),
+                                            Utils.nullToStr( item.objectgeolat ),
+                                            Utils.nullToStr( item.objectgeolon ),
+                                            Utils.nullToStr( item.objectoldformat )
+                                        ]
+                                    );
+                                }
                             }
                         } else if (prop === 'dateExitUpd') {
                             resultString.fields[prop] = Utils.nullToStr( Utils.dateConvert(resultSet[0][mapping[prop]].toISOString(),'FRONT_END') );
