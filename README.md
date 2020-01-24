@@ -26,3 +26,6 @@ $ npm install mysql --save
 ```
 $ npm install soap --save 
 ```
+```
+$ npm install cors --save
+```
