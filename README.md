@@ -1,8 +1,6 @@
 # exitlog_dev_node
 exitlog with node.js backend
 
-`./frontend/fontawesome-free-5_0_13`  -- contains Font Awesome Version 5.0.13 (src structure)
-
 ## npm commands for node_modules
 
 ```
